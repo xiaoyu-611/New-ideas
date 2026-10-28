@@ -98,27 +98,27 @@
         #btn2:hover {
             background-color: #e04848;
         }
-    .full-screen-btn{
+   .full-screen-btn{
     position: fixed !important;
     inset: 0 !important;
     width: 100vw !important;
     height: 100vh !important;
     border-radius: 0 !important;
-    /* 修改这里：上限压低，同时限制最大宽度，宽屏电脑不会炸 */
     font-size: clamp(48px, 14vw, 90px) !important;
     z-index: 9999 !important;
     pointer-events: auto !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
-    white-space: nowrap;
+    /* 删掉 white-space: nowrap; 允许自动换行 */
     color: #fff !important;
     font-weight: bold !important;
     user-select: none;
     -webkit-tap-highlight-color: transparent;
-    /* 新增：给文字容器加最大宽度，宽屏电脑文字不会拉太长溢出 */
     max-width: 100%;
-    padding: 0 16px;
+    padding: 0 20px;
+    text-align: center;
+    line-height: 1.2;
 }
     </style>
 </head>
@@ -319,7 +319,7 @@
                 btn1.style.display = "none";
                 emojiBox.style.opacity = 0;
                 emojiBox.classList.remove("active");
-                btn2.innerText = "去约会！";
+                btn2.innerText = "和我去约会！！！";
                 btn2.removeEventListener("touchstart", onTouchStartBtn2);
                 btn2.removeEventListener("touchend", onTouchEndBtn2);
                 btn2.removeEventListener("touchcancel", onTouchEndBtn2);
