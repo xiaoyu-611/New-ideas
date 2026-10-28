@@ -98,13 +98,14 @@
         #btn2:hover {
             background-color: #e04848;
         }
-       .full-screen-btn{
+      .full-screen-btn{
     position: fixed !important;
     inset: 0 !important;
     width: 100vw !important;
     height: 100vh !important;
     border-radius: 0 !important;
-    font-size: clamp(70px, 20vw, 140px) !important;
+    /* 重点：调低vw比例，适配8个字符（5汉字+3感叹号） */
+    font-size: clamp(48px, 14vw, 110px) !important;
     z-index: 9999 !important;
     pointer-events: auto !important;
     display: flex !important;
