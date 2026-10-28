@@ -116,6 +116,16 @@
     user-select: none;
     -webkit-tap-highlight-color: transparent;
     padding: 0 20px;
+
+    /* 新增：竖屏时自动旋转，模拟横屏效果 */
+    @media (orientation: portrait) {
+        transform: rotate(-90deg);
+        transform-origin: center center;
+        width: 100vh;
+        height: 100vw;
+        top: 0;
+        left: calc((100vh - 100vw) / 2);
+    }
 }
     </style>
 </head>
