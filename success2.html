@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>答应啦💖</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            min-height: 100vh;
+            background: #ffeff6;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-family: "Microsoft Yahei", sans-serif;
+            overflow: hidden;
+            gap: 24px;
+        }
+        .title {
+            font-size: 32px;
+            color: #e64980;
+            font-weight: bold;
+        }
+        .desc {
+            font-size: 20px;
+            color: #c2255c;
+            text-align: center;
+            line-height: 1.6;
+        }
+        .restart-btn {
+            margin-top: 20px;
+            padding: 12px 28px;
+            border: none;
+            border-radius: 999px;
+            background: linear-gradient(135deg, #ff7597, #ff2b6b);
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(255, 70, 120, 0.35);
+        }
+        .restart-btn:hover {
+            transform: scale(1.05);
+        }
+        .heart {
+            position: fixed;
+            z-index: 9999;
+            pointer-events: none;
+            font-size: 22px;
+        }
+    </style>
+</head>
+<body>
+<div class="title">🎉 约会达成！</div>
+<div class="desc">太好了，对方很开心！期待愉快的约会时光~</div>
+<button class="restart-btn" onclick="restart()">再玩一次</button>
+
+<script>
+    // 多种爱心样式
+    const heartList = ['❤️','💖','💗','💓','💕','💝'];
+    // 渐变色
+    const colorList = [
+        '#ff477e','#ff6b8b','#ff87a2','#ff9ebb','#ffb6c8','#ff3377'
+    ];
+
+    function createHeart() {
+        const heart = document.createElement("div");
+        heart.className = "heart";
+        // 随机爱心样式
+        heart.innerHTML = heartList[Math.floor(Math.random() * heartList.length)];
+        // 随机颜色
+        heart.style.color = colorList[Math.floor(Math.random() * colorList.length)];
+
+        // 水平随机，起点在屏幕顶部外面
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.top = "-60px";
+
+        // 随机下落时长
+        const fallTime = 4000 + Math.random() * 2500;
+        // 随机左右摇摆幅度
+        const swayX = (Math.random() - 0.5) * 90;
+
+        heart.animate([
+            { transform: "translate(0, 0) rotate(0deg)", opacity: 1 },
+            { transform: `translate(${swayX}px, 110vh) rotate(360deg)`, opacity: 0 }
+        ], {
+            duration: fallTime,
+            easing: "linear"
+        });
+
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), fallTime);
+    }
+
+    // 持续生成爱心雨
+    let timer = setInterval(createHeart, 120);
+
+    // 再玩一次，返回首页（index.html）
+    function restart(){
+        window.location.href = "index.html";
+    }
+</script>
+</body>
+</html>
