@@ -98,16 +98,24 @@
         #btn2:hover {
             background-color: #e04848;
         }
-        .full-screen-btn{
-            position: fixed !important;
-            inset: 0 !important;
-            width: 100vw !important;
-            height: 100vh !important;
-            border-radius: 0 !important;
-            font-size: 40px !important;
-            z-index: 9999 !important;
-            pointer-events: auto !important;
-        }
+       .full-screen-btn{
+    position: fixed !important;
+    inset: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    border-radius: 0 !important;
+    font-size: clamp(70px, 20vw, 140px) !important;
+    z-index: 9999 !important;
+    pointer-events: auto !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    white-space: nowrap;
+    color: #fff !important;
+    font-weight: bold !important;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
     </style>
 </head>
 <body>
@@ -307,7 +315,7 @@
                 btn1.style.display = "none";
                 emojiBox.style.opacity = 0;
                 emojiBox.classList.remove("active");
-                btn2.innerText = "    同意去约会！！！";
+                btn2.innerText = "    和我去约会！！！";
                 btn2.removeEventListener("touchstart", onTouchStartBtn2);
                 btn2.removeEventListener("touchend", onTouchEndBtn2);
                 btn2.removeEventListener("touchcancel", onTouchEndBtn2);
@@ -316,7 +324,7 @@
                 gameBox.classList.add("hide");
             }
         }
-        setTimeout(()=>isClicking = false, 150);
+        setTimeout(()=>isClicking = false, 100);
     });
 </script>
 </body>
