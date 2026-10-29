@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>答应啦🥰</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* 爱心雨样式 */
+        .heart {
+            position: fixed;
+            top: -60px;
+            left: 0;
+            font-size: 22px;
+            pointer-events: none;  /* 不挡点击 */
+            z-index: 1;
+            user-select: none;
+            will-change: transform, opacity;
+        }
+
+        .audio-btn{
+            position: fixed;
+            top:16px;
+            right:16px;
+            width:44px;
+            height:44px;
+            border-radius:50%;
+            border:none;
+            background:#ffffffdd;
+            backdrop-filter: blur(6px);
+            font-size:20px;
+            z-index:99;
+            cursor:pointer;
+            box-shadow:0 2px 10px rgba(0,0,0,0.08);
+            -webkit-tap-highlight-color: transparent;
+        }
+        body {
+            background: linear-gradient(135deg, #fff0f4, #ffe6ef);
+            font-family: "Microsoft Yahei", sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 30px 20px;
+            overflow: hidden; /* 防止爱心雨撑出滚动条 */
+        }
+        .card{
+            max-width: 480px;
+            background: #ffffffdd;
+            backdrop-filter: blur(8px);
+            padding: 45px 35px;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(200, 35, 80, 0.12);
+            text-align: center;
+            position: relative;
+            z-index: 2; /* 卡片在爱心上方 */
+        }
+        h2{
+            color: #c82350;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+        .text-desc{
+            color: #991b40;
+            font-size:17px;
+            line-height:1.8;
+            margin-bottom: 40px;
+        }
+        .next-btn{
+            border: none;
+            background-color: #f56c6c;
+            color: #fff;
+            padding: 14px 32px;
+            border-radius: 12px;
+            font-size: 17px;
+            cursor: pointer;
+            transition: 0.25s;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .next-btn:hover{
+            background-color: #e04848;
+        }
+    </style>
+</head>
+<body>
+<button class="audio-btn" id="audioBtn">🔊</button>
+
+<audio id="bgMusic" loop preload="auto">
+    <source src="矢野立美 - その名は“ウルトラマンティガ“_L.mp3" type="audio/mpeg">
+</audio>
+
+<div class="card">
+    <h2>太棒啦🥰</h2>
+    <div class="text-desc">
+        对方很开心~<br>
+        期待和你的约会哦~<br>
+        往后的日子，我们一起慢慢走
+    </div>
+    <button class="next-btn" id="backBtn">再玩一次</button>
+</div>
+
+<script>
+    /* ===== 音乐控制 ===== */
+    const bgMusic = document.getElementById('bgMusic');
+    const audioBtn = document.getElementById('audioBtn');
+    const backBtn = document.getElementById("backBtn");
+    let musicStarted = false;
+
+    audioBtn.onclick = ()=>{
+        if(!musicStarted){
+            bgMusic.play().catch(()=>{});
+            musicStarted = true;
+            audioBtn.textContent = "🔊";
+            return;
+        }
+        if(bgMusic.paused){
+            bgMusic.play().catch(()=>{});
+            audioBtn.textContent = "🔊";
+        }else{
+            bgMusic.pause();
+            audioBtn.textContent = "🔇";
+        }
+    }
+
+    backBtn.onclick = function(){
+        location.href = "index.html";
+    }
+
+    /* ===== 爱心雨 ===== */
+    const heartList = ['❤️','💖','💗','💓','💕','💝'];
+    const colorList = ['#ff477e','#ff6b8b','#ff87a2','#ff9ebb','#ffb6c8','#ff3377'];
+
+    function createHeart() {
+        const heart = document.createElement("div");
+        heart.className = "heart";
+        heart.innerHTML = heartList[Math.floor(Math.random() * heartList.length)];
+        heart.style.color = colorList[Math.floor(Math.random() * colorList.length)];
+
+        // 水平随机，起点在屏幕顶部外面
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.top = "-60px";
+
+        // 随机下落时长
+        const fallTime = 4000 + Math.random() * 2500;
+        // 随机左右摇摆幅度
+        const swayX = (Math.random() - 0.5) * 90;
+
+        heart.animate([
+            { transform: "translate(0, 0) rotate(0deg)", opacity: 1 },
+            { transform: `translate(${swayX}px, 110vh) rotate(360deg)`, opacity: 0 }
+        ], {
+            duration: fallTime,
+            easing: "linear"
+        });
+
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), fallTime);
+    }
+
+    let timer = setInterval(createHeart, 120);
+
+    // 如果想让爱心少一点，把 120 改大（比如 200）；多一点就改小（比如 80）
+
+    // 再玩一次，返回首页
+    function restart(){
+        window.location.href = "index.html";
+    }
+</script>
+</body>
+</html>
