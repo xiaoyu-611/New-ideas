@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>答应啦🥰</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* 爱心雨样式 */
+    .heart {
+      position: fixed;
+      top: -60px;
+      left: 0;
+      font-size: 22px;
+      pointer-events: none;
+      z-index: 1;
+      user-select: none;
+      will-change: transform, opacity;
+    }
+
+    .audio-btn{
+      position: fixed;
+      top:16px;
+      right:16px;
+      width:44px;
+      height:44px;
+      border-radius:50%;
+      border:none;
+      background:#ffffffdd;
+      backdrop-filter: blur(6px);
+      font-size:20px;
+      z-index:99;
+      cursor:pointer;
+      box-shadow:0 2px 10px rgba(0,0,0,0.08);
+      -webkit-tap-highlight-color: transparent;
+    }
+    body {
+      background: linear-gradient(135deg, #fff0f4, #ffe6ef);
+      font-family: "Microsoft Yahei", sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 30px 20px;
+      overflow: hidden;
+    }
+    .card{
+      max-width: 480px;
+      width: 100%;
+      max-height: 85vh;          /* 卡片最高占屏幕 85% */
+      display: flex;
+      flex-direction: column;
+      background: #ffffffdd;
+      backdrop-filter: blur(8px);
+      padding: 35px 30px;
+      border-radius: 20px;
+      box-shadow: 0 4px 20px rgba(200, 35, 80, 0.12);
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+    h2{
+      color: #c82350;
+      font-size: 28px;
+      margin-bottom: 20px;
+      flex-shrink: 0;
+    }
+
+    /* ===== 可滚动长文本区域 ===== */
+    .scroll-text{
+      flex: 1 1 auto;
+      overflow-y: auto;
+      text-align: left;
+      color: #991b40;
+      font-size: 16px;
+      line-height: 1.9;
+      padding: 6px 12px 6px 6px;
+      margin-bottom: 18px;
+      border-radius: 10px;
+      background: #fff5f8;
+      /* 自定义滚动条（Chrome/Edge/Safari） */
+      scrollbar-width: thin;
+      scrollbar-color: #f6a5b8 #ffe6ef;
+    }
+    .scroll-text p{
+      margin-bottom: 14px;
+    }
+    .scroll-text p:last-child{
+      margin-bottom: 0;
+    }
+    /* WebKit 滚动条美化 */
+    .scroll-text::-webkit-scrollbar{
+      width: 8px;
+    }
+    .scroll-text::-webkit-scrollbar-track{
+      background: #ffe6ef;
+      border-radius: 4px;
+    }
+    .scroll-text::-webkit-scrollbar-thumb{
+      background: #f6a5b8;
+      border-radius: 4px;
+    }
+    .scroll-text::-webkit-scrollbar-thumb:hover{
+      background: #f56c6c;
+    }
+
+    /* 滚动到底提示 */
+    .scroll-hint{
+      flex-shrink: 0;
+      font-size: 13px;
+      color: #d47a93;
+      margin-bottom: 10px;
+      opacity: 1;
+      transition: opacity 0.4s;
+      height: 18px;
+    }
+    .scroll-hint.hide{
+      opacity: 0;
+    }
+
+    .next-btn{
+      flex-shrink: 0;
+      align-self: center;
+      border: none;
+      background-color: #f56c6c;
+      color: #fff;
+      padding: 14px 32px;
+      border-radius: 12px;
+      font-size: 17px;
+      cursor: pointer;
+      transition: opacity 0.5s ease, transform 0.5s ease, background 0.25s;
+      -webkit-tap-highlight-color: transparent;
+      /* 初始隐藏 */
+      opacity: 0;
+      transform: translateY(8px);
+      pointer-events: none;
+    }
+    .next-btn.show{
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+    .next-btn:hover{
+      background-color: #e04848;
+    }
+  </style>
+</head>
+<body>
+<button class="audio-btn" id="audioBtn">🔊</button>
+
+<audio id="bgMusic" loop preload="auto">
+  <source src="矢野立美 - その名は“ウルトラマンティガ“_L.mp3" type="audio/mpeg">
+</audio>
+
+<div class="card">
+  <h2>太棒啦🥰</h2>
+
+  <!-- 长文本可滚动区域 -->
+  <div class="scroll-text" id="scrollText">
+    <p>对方很开心~</p>
+    <p>期待和你的约会哦~</p>
+    <p>往后的日子，我们一起慢慢走。</p>
+
+    <p>其实在发出邀请之前，我犹豫了很久。怕打扰你，怕你觉得突然，也怕你恰好很忙。可还是鼓起勇气按下发送，因为有些话不说出口，就永远不知道答案。</p>
+    <p>谢谢你愿意点头。对我来说，这不只是一次出门，而是一个很认真、很珍贵的开始。</p>
+    <p>我想把这一天安排得刚刚好：先带你去那家听说很久的小店，点你可能会喜欢的甜点；然后沿着河边慢慢走，风不大的话就多走一段，风大了就找地方坐下喝点热的。</p>
+    <p>如果你累了，我们就休息；如果你想多逛一会儿，我就陪你多逛一会儿。不用赶时间，也不用担心冷场——哪怕安静地走着，也很好。</p>
+    <p>往后的日子还很长，我希望我们可以一点点熟悉彼此，把每一次见面都变成值得记住的小事。</p>
+    <p>那么，就请多指教啦。💕</p>
+  </div>
+
+  <div class="scroll-hint" id="scrollHint">↓ 往下滑，看完再点按钮哦 ↓</div>
+
+  <button class="next-btn" id="backBtn">再玩一次</button>
+</div>
+
+<script>
+  /* ===== 音乐控制 ===== */
+  const bgMusic = document.getElementById('bgMusic');
+  const audioBtn = document.getElementById('audioBtn');
+  const backBtn = document.getElementById("backBtn");
+  let musicStarted = false;
+
+  audioBtn.onclick = ()=>{
+    if(!musicStarted){
+      bgMusic.play().catch(()=>{});
+      musicStarted = true;
+      audioBtn.textContent = "🔊";
+      return;
+    }
+    if(bgMusic.paused){
+      bgMusic.play().catch(()=>{});
+      audioBtn.textContent = "🔊";
+    }else{
+      bgMusic.pause();
+      audioBtn.textContent = "🔇";
+    }
+  }
+
+  backBtn.onclick = function(){
+    location.href = "index.html";
+  }
+
+  /* ===== 滚动到底才显示按钮 ===== */
+  const scrollText = document.getElementById('scrollText');
+  const scrollHint = document.getElementById('scrollHint');
+  let btnRevealed = false;
+
+  function checkScrollBottom(){
+    const threshold = 4; // 允许 4px 误差
+    const atBottom = scrollText.scrollTop + scrollText.clientHeight >= scrollText.scrollHeight - threshold;
+
+    if(atBottom){
+      if(!btnRevealed){
+        btnRevealed = true;
+        backBtn.classList.add('show');
+        scrollHint.classList.add('hide');
+      }
+    }else{
+      // 如果希望到底后永久显示，删掉下面这段 else 即可
+      if(btnRevealed){
+        btnRevealed = false;
+        backBtn.classList.remove('show');
+        scrollHint.classList.remove('hide');
+      }
+    }
+  }
+
+  scrollText.addEventListener('scroll', checkScrollBottom);
+
+  // 页面加载后先检查一次（万一内容不够长，无需滚动）
+  window.addEventListener('load', () => {
+    checkScrollBottom();
+    // 若内容不足以产生滚动条，直接显示按钮
+    if(scrollText.scrollHeight <= scrollText.clientHeight + 4){
+      btnRevealed = true;
+      backBtn.classList.add('show');
+      scrollHint.classList.add('hide');
+    }
+  });
+
+  /* ===== 爱心雨 ===== */
+  const heartList = ['❤️','💖','💗','💓','💕','💝'];
+  const colorList = ['#ff477e','#ff6b8b','#ff87a2','#ff9ebb','#ffb6c8','#ff3377'];
+
+  function createHeart() {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerHTML = heartList[Math.floor(Math.random() * heartList.length)];
+    heart.style.color = colorList[Math.floor(Math.random() * colorList.length)];
+
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.top = "-60px";
+
+    const fallTime = 4000 + Math.random() * 2500;
+    const swayX = (Math.random() - 0.5) * 90;
+
+    heart.animate([
+      { transform: "translate(0, 0) rotate(0deg)", opacity: 1 },
+      { transform: `translate(${swayX}px, 110vh) rotate(360deg)`, opacity: 0 }
+    ], {
+      duration: fallTime,
+      easing: "linear"
+    });
+
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), fallTime);
+  }
+
+  let timer = setInterval(createHeart, 120);
+</script>
+</body>
+</html>
