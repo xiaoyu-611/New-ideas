@@ -148,10 +148,33 @@
     .next-btn:hover{
       background-color: #e04848;
     }
+    /* 音乐提示条 */
+    .music-tip{
+      position: fixed;
+      top: 70px;
+      right: 16px;
+      background: #ffffffdd;
+      backdrop-filter: blur(6px);
+      color: #c82350;
+      font-size: 14px;
+      padding: 8px 14px;
+      border-radius: 20px;
+      box-shadow: 0 2px 10px rgba(200, 35, 80, 0.15);
+      z-index: 99;
+      pointer-events: none;
+      opacity: 0;
+      transform: translateY(-6px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+    .music-tip.show{
+      opacity: 1;
+      transform: translateY(0);
+    }
   </style>
 </head>
 <body>
 <button class="audio-btn" id="audioBtn">🔊</button>
+<div class="music-tip" id="musicTip">点击 🔊 可播放音乐哦</div>
 
 <audio id="bgMusic" loop preload="auto">
   <source src="矢野立美 - その名は“ウルトラマンティガ“_L.mp3" type="audio/mpeg">
@@ -242,6 +265,13 @@
       backBtn.classList.add('show');
       scrollHint.classList.add('hide');
     }
+  });
+
+  /* ===== 音乐提示条：进入时显示，4 秒后自动淡出 ===== */
+  const musicTip = document.getElementById('musicTip');
+  window.addEventListener('load', () => {
+    setTimeout(() => musicTip.classList.add('show'), 300);
+    setTimeout(() => musicTip.classList.remove('show'), 4300);
   });
 
   /* ===== 爱心雨 ===== */
